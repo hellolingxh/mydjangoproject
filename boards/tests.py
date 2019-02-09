@@ -1,3 +1,18 @@
 from django.test import TestCase
 
 # Create your tests here.
+
+#from django.core.urlresolvers import reverse // Django 2.0 removes the django.core.urlresolvers module.
+from django.urls import reverse
+from django.urls import resolve
+from .views import home
+
+class HomeTests(TestCase):
+    def test_home_view_status_code(self):
+        url = reverse('home')
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
+
+    def test_home_url_resolves_home_view(self):
+        view = resolve('/')
+        self.assertEquals(view.func, home)
